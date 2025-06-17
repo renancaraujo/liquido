@@ -1,0 +1,17 @@
+
+# Flutter/Dart/Pub related
+/build/
+
+
+# Platform directories
+ios/
+android/
+macos/
+windows/
+linux/
+web/
+.metadata
+
+# Forgive me lord for I have sinned
+test/
+

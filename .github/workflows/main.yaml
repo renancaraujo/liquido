@@ -1,0 +1,55 @@
+name: ci
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+   pull_request:
+    types: [ opened, synchronize, reopened, ready_for_review, converted_to_draft ]
+    branches:
+      - "*"
+    paths:
+      - ".github/workflows/main.yaml"
+      - "./lib/**"
+      - "./test/**"
+      - "./pubspec.yaml"
+
+jobs:
+  semantic_pull_request:
+    defaults:
+      run:
+        working-directory: "."
+    runs-on: ubuntu-latest
+    steps:
+      - name: Semantic pull request
+        if: github.event_name == 'pull_request'
+        uses: amannn/action-semantic-pull-request@v5.5.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          validateSingleCommit: false
+          ignoreLabels: |
+            bot
+            ignore-semantic-pull-request
+          wip: false
+  build:
+    defaults:
+      run:
+        working-directory: "."
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: setup flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - name: analyze
+        run: flutter analyze lib test
+      - name: test
+        run: flutter test
+      - name: format
+        run: dart format --set-exit-if-changed .

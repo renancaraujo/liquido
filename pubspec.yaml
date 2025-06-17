@@ -1,0 +1,22 @@
+name: liquido
+description: Liquido is a way to implement the Liquid Glass effect on Flutter-rendered surfaces
+version: 0.1.0+1
+
+
+environment:
+  sdk: ^3.8.0
+  flutter: ">=3.27.0"
+
+dependencies:
+  equatable: ^2.0.7
+  flutter:
+    sdk: flutter
+  flutter_shaders: ^0.1.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  shaders:
+    - shaders/liquido_impeller.frag
