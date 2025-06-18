@@ -331,15 +331,15 @@ class _GlassText extends StatelessWidget implements Glass {
     // Prevent user from doing anything stupid
     effectiveTextStyle = effectiveTextStyle!.copyWith(
       color: const Color(0xFF000000),
-      decorationColor: const Color(0xFF000000),
-      backgroundColor: const Color(0xFF000000),
+      decorationColor: const Color(0x00000000),
+      backgroundColor: const Color(0x00000000),
       shadows: [],
     );
 
     final text = Text(
       data,
       style: effectiveTextStyle,
-      strutStyle: strutStyle,
+      // strutStyle: strutStyle,
       textAlign: textAlign,
       textDirection: textDirection,
       locale: locale,
@@ -357,7 +357,10 @@ class _GlassText extends StatelessWidget implements Glass {
     return _Glass(
       options: this,
       mask: text,
-      child: text,
+      child: Opacity(
+        opacity: 0, 
+        child: text,
+      ),
     );
   }
 }
